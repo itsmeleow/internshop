@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import Link from "next/link";
+import { Store } from 'lucide-react';
+import { SearchBar } from "@/components/search-bar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,12 +28,73 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* Top bar with thin border */}
+          <div className="fixed top-0 left-0 w-full z-50 border-b bg-background/90 backdrop-blur shadow-sm h-14 flex items-center px-6 text-lg text-violet-500 dark:bg-background">
+            <span className="flex items-center gap-2 font-semibold"><Store className="w-6 h-6"/>internshop</span>
+            <div className="flex-1" />
+            <div className="w-full max-w-xs"><SearchBar /></div>
+          </div>
+          {/* Spacer to prevent content from being hidden behind the fixed bar */}
+          <div className="h-14" />
+          {/* <div className="flex justify-between items-center">
+            <NavigationMenu viewport={false}>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>internshop</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                      <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <a
+                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                            href="/"
+                          >
+                            <div className="mt-4 mb-2 text-lg font-medium">
+                              internshop
+                            </div>
+                            <p className="text-muted-foreground text-sm leading-tight">
+                              The one stop shop for internship search.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div> */}
+          {children}
+        </ThemeProvider>
       </body>
     </html>
+  );
+}
+
+function ListItem({
+  title,
+  children,
+  href,
+  ...props
+}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+  return (
+    <li {...props}>
+      <NavigationMenuLink asChild>
+        <Link href={href}>
+          <div className="text-sm leading-none font-medium">{title}</div>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            {children}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
   );
 }
