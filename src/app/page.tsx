@@ -11,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+
 import {
   Card,
   CardHeader,
@@ -24,7 +25,6 @@ import { ExternalLink, MapPin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-// Helper to get initials from company name
 function getInitials(name: string) {
   return name
     .split(' ')
@@ -113,8 +113,6 @@ export default function Home() {
               <Card className="cursor-pointer">
                 <CardHeader>
                   <CardTitle>{job.title || job.externalUrl || "No Title"}</CardTitle>                
-                  {/* Remove location from here */}
-                  {/* Add more job details here as needed */}                    
                   <div className="text-gray-600 flex items-center">
                     <MapPin className="inline-block mr-1 align-middle" />{job.location || ""}
                   </div>
@@ -129,7 +127,7 @@ export default function Home() {
                     </div>
 
                   </div>
-                </CardFooter>
+                </CardFooter> 
               </Card>
             </DrawerTrigger>
             <DrawerContent className="w-full ml-auto">
@@ -143,7 +141,6 @@ export default function Home() {
                     <span className="text-base text-gray-700">{job.company}</span>
                   </div>
                   <div className="text-gray-600 mb-2"><MapPin className="inline-block mr-1 align-middle" />{job.location || ""}</div>
-                  {/* Add more job details here as needed */}
                   <div
                     className="mt-4"
                     dangerouslySetInnerHTML={{ __html: job.jobDescription || "No description available." }}
