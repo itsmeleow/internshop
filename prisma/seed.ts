@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "../src/generated/prisma";
+import { PrismaClient, Prisma } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
@@ -17,10 +17,12 @@ const companyData: Prisma.CompanyCreateInput[] = [
         {
           id: "00110000",
           title: "Software Engineer",
+          jobDescription: "test",
           location: "San Jose, CA",
+          externalUrl: "https://ag.wd3.myworkdayjobs.com/en-US/Airbus/details/Senior-Software-Engineer_JR10324964",
           timeType: "Full time",
           timeLeftToApply: 1,
-          jobDescription: "test",
+          
         },
       ],
     },
@@ -37,11 +39,13 @@ const companyData: Prisma.CompanyCreateInput[] = [
       create: [
         {
           id: "00210000",
-          title: "Mechanical Systems Design Engineer (Contract)",
+          title: "Mechanical Systems Design Engineer (Contract)",          
+          jobDescription: "test",
           location: "Wichita, KS",
+          externalUrl: "https://ag.wd3.myworkdayjobs.com/en-US/Airbus/details/Senior-Software-Engineer_JR10324964",
           timeType: "Full time",
           timeLeftToApply: 2,
-          jobDescription: "test",
+
         },
       ],
     },

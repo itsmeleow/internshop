@@ -19,6 +19,7 @@ model User {
   name     String
   email    String @unique
   password String
+  appliedJobs    String[]
 }
 
 model Company {
@@ -30,15 +31,22 @@ model Company {
   searchUrl    String
   queryKeyword String
   Job          Job[]
+
+  @@index([atsType])
 }
 
 model Job {
   id              String  @id @unique
   companyId       Int
   company         Company @relation(fields: [companyId], references: [id])
-  title           String
+  title           String  
+  jobDescription  String
   location        String
+  externalUrl     String
   timeType        String
   timeLeftToApply Int
-  jobDescription  String
+
+  @@index([companyId])
+  @@index([location])
+  @@index([timeType])
 }
