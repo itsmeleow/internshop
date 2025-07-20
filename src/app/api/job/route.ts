@@ -25,6 +25,6 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error) {
-    return NextResponse.json({ error }, { status: 400 });
+    return NextResponse.json("Failed to fetch job details: " + { error }, { status: 500 });
   }
 }

@@ -5,20 +5,27 @@ import prisma from "@/lib/prisma";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const companyName = searchParams.get("company");
-  if (!companyName)
+  if (!companyName) {
     return NextResponse.json(
       { error: "No company name in search paramater." },
       { status: 400 }
     );
+  }
   try {
     const companyDetails = await prisma.company.findUnique({
       where: {
         name: companyName,
       },
     });
-    return NextResponse.json(companyDetails);
+    return NextResponse.json(
+      { companyDetails },
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
-    return NextResponse.json({ error });
+    return NextResponse.json("Failed to fetch company details: " + { error }, { status: 500 });
   }
 }
 
@@ -36,11 +43,14 @@ export async function POST(request: NextRequest) {
         queryKeyword: body.queryKeyword,
       },
     });
-    return NextResponse.json({ company }, {
+    return NextResponse.json(
+      { company },
+      {
         status: 200,
-        headers: { 'Content-Type': 'application/json'}
-    });
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
-    return NextResponse.json({ error }, { status: 400 });
+    return NextResponse.json("Failed to add company: " + { error }, { status: 500 });
   }
 }
